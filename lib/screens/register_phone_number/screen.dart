@@ -1,6 +1,7 @@
 import 'package:country_list_pick/country_list_pick.dart';
 import 'package:finity/extension/extension.dart';
 import 'package:finity/router/router.dart';
+import 'package:finity/screens/screens.dart';
 import 'package:finity/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -199,7 +200,10 @@ class _RegisterPhoneNumberScreenState extends State<RegisterPhoneNumberScreen> {
               ),
               Gap(25.cl(30, 80)),
               TextButton(
-                onPressed: isFormValid ? () {} : null,
+                onPressed: isFormValid.when(
+                  use: const VerificationScreen().goto,
+                  elseUse: null,
+                ),
                 style: context.theme.textButtonTheme.style?.copyWith(
                   minimumSize: Size(90.w, 20.cl(18, 30)).all,
                   backgroundColor: MaterialStateProperty.resolveWith((states) {
@@ -274,16 +278,11 @@ class _RegisterPhoneNumberScreenState extends State<RegisterPhoneNumberScreen> {
                 style: context.textTheme.bodyMedium,
               ),
               TextButton(
-                onPressed: null,
+                onPressed: const LoginScreen().goto,
                 style: context.theme.textButtonTheme.style?.copyWith(
                   backgroundColor: Colors.transparent.all,
                   foregroundColor: AppTheme.color.primaryColor.all,
-                  shadowColor: MaterialStateProperty.resolveWith((states) {
-                    if (states.contains(MaterialState.disabled)) {
-                      return Colors.transparent;
-                    }
-                    return AppTheme.color.secondaryColor.withOpacity(0.5);
-                  }),
+                  shadowColor: Colors.transparent.all,
                   overlayColor: MaterialStatePropertyAll(
                     AppTheme.color.backgroundColor.withOpacity(0.1),
                   ),

@@ -3,3 +3,7 @@ export 'onboarding/screen.dart';
 export 'welcome/screen.dart';
 export 'register/screen.dart';
 export 'register_phone_number/screen.dart';
+export 'verification/screen.dart';
+export 'user_welcome/screen.dart';
+export 'login/screen.dart';
+export 'forgot_password/screen.dart';

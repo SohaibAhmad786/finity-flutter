@@ -1,7 +1,7 @@
 import 'package:finity/extension/extension.dart';
+import 'package:finity/extension/handler/handler.dart';
 import 'package:finity/router/router.dart';
-import 'package:finity/screens/login/screen.dart';
-import 'package:finity/screens/register_phone_number/screen.dart';
+import 'package:finity/screens/screens.dart';
 import 'package:finity/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,15 +11,15 @@ import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:remixicon_updated/remixicon_updated.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class RegisterScreen extends StatefulWidget implements AppRouter {
-  const RegisterScreen({super.key});
+class LoginScreen extends StatefulWidget implements AppRouter {
+  const LoginScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 
   @override
   String path() {
-    return '/auth/register';
+    return '/auth/login';
   }
 
   @override
@@ -29,7 +29,7 @@ class RegisterScreen extends StatefulWidget implements AppRouter {
 
   @override
   String title() {
-    return 'Create Account';
+    return 'Log into Account';
   }
 
   @override
@@ -38,13 +38,10 @@ class RegisterScreen extends StatefulWidget implements AppRouter {
   }
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   bool isChecked = false;
-  final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isPasswordHidden = true;
 
@@ -72,7 +69,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Register',
+                      'Login',
                       style: context.textTheme.displaySmall,
                     ),
                     Gap(20.cl(18, 36)),
@@ -116,41 +113,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ).paddingSymmetric(
                       vertical: 16.cl(20, 40),
                     ),
-                    TextFormField(
-                      controller: _fullNameController,
-                      validator: (String? val) {
-                        if (val == null) {
-                          return 'Required';
-                        } else if (val.trim().length <= 3) {
-                          return 'Enter your full name';
-                        } else {
-                          return null;
-                        }
-                      },
-                      style: context.textTheme.bodyMedium,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      onChanged: (_) {
-                        setState(() {
-                          isFormValid =
-                              _formKey.currentState?.validate() ?? false;
-                        });
-                      },
-                      keyboardType: TextInputType.name,
-                      autofillHints: const <String>[AutofillHints.name],
-                      decoration: InputDecoration(
-                        hintText: 'Full Name',
-                        focusColor: AppTheme.color.primaryColor,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.cl(10, 20)),
-                          borderSide: BorderSide(
-                            width: 6.sp,
-                            style: BorderStyle.solid,
-                            color: AppTheme.color.primaryColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Gap(14.cl(10, 28)),
                     TextFormField(
                       controller: _emailController,
                       onChanged: (_) {
@@ -223,88 +185,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     Gap(14.cl(10, 28)),
-                    TextFormField(
-                      controller: _confirmPasswordController,
-                      validator: (String? val) {
-                        if (val == null) {
-                          return 'Required';
-                        } else if (val != _passwordController.text) {
-                          return 'Passwords do not match.';
-                        } else {
-                          return null;
-                        }
-                      },
-                      obscureText: isPasswordHidden,
-                      style: context.textTheme.bodyMedium,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      onChanged: (_) {
-                        setState(() {
-                          isFormValid =
-                              _formKey.currentState?.validate() ?? false;
-                        });
-                      },
-                      keyboardType: TextInputType.visiblePassword,
-                      autofillHints: const <String>[AutofillHints.password],
-                      decoration: const InputDecoration(
-                        hintText: 'Confirm Password',
+                    Text(
+                      'Forgot Password',
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        color: AppTheme.color.secondaryColor,
+                        decoration: TextDecoration.underline,
                       ),
-                    ),
-                    Gap(14.cl(10, 28)),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Checkbox(
-                          value: isChecked,
-                          onChanged: (bool? val) {
-                            setState(() {
-                              isChecked = val ?? isChecked;
-                            });
-                          },
-                          fillColor: ((!isChecked).when(
-                                  use: Colors.transparent,
-                                  elseUse: AppTheme.color.secondaryColor))
-                              .all,
-                          checkColor: Colors.white,
-                          visualDensity: VisualDensity.comfortable,
-                          side: BorderSide(
-                            width: 4.cl(2, 4),
-                            color: isChecked.when(
-                              use: AppTheme.color.secondaryColor,
-                              elseUse: AppTheme.color.secondaryTextColor,
-                            ),
-                          ),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: 6.cl(4, 10).brc),
-                        ),
-                        RichText(
-                          text: TextSpan(
-                              text: 'I’ve read and agree to the ',
-                              style: context.textTheme.bodyMedium?.copyWith(
-                                  color: AppTheme.color.secondaryTextColor),
-                              children: [
-                                TextSpan(
-                                  text: 'terms',
-                                  style: context.textTheme.headlineMedium
-                                      ?.copyWith(
-                                          color: AppTheme.color.primaryColor),
-                                ),
-                                const TextSpan(text: ' of '),
-                                TextSpan(
-                                  text: 'privacy policy',
-                                  style: context.textTheme.headlineMedium
-                                      ?.copyWith(
-                                          color: AppTheme.color.primaryColor),
-                                ),
-                              ]),
-                        ).expand,
-                      ],
-                    ),
+                    )
+                        .gestureHandler(
+                            onTap: const ForgotPasswordScreen().stepBackandTo)
+                        .toRight,
                     Gap(30.cl(30, 100)),
                     TextButton(
                       onPressed: isFormValid
                           ? () {
                               if (_formKey.currentState?.validate() ?? false) {
-                                const RegisterPhoneNumberScreen().goto();
+                                const UserWelcomeScreen().goto();
                               }
                             }
                           : null,
@@ -335,35 +231,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       child: const Text(
-                        'Next',
+                        'Login',
                       ),
                     ).center,
                     Gap(30.cl(30, 100)),
                     Text(
-                      'Already have an account?',
+                      "Don't have an account?",
                       style: context.textTheme.bodyMedium,
                     ),
                     TextButton(
-                      onPressed: const LoginScreen().stepBackandTo,
+                      onPressed: const RegisterScreen().stepBackandTo,
                       style: context.theme.textButtonTheme.style?.copyWith(
                         backgroundColor: Colors.transparent.all,
                         foregroundColor: AppTheme.color.primaryColor.all,
                         shadowColor: Colors.transparent.all,
-                        overlayColor:
-                            AppTheme.color.backgroundColor.withOpacity(0.1).all,
-                        padding: 0
-                            .pdX
-                            .copyWith(
-                              top: 16.cl(14, 28),
-                              bottom: 16.cl(14, 28),
-                            )
-                            .all,
+                        overlayColor: MaterialStatePropertyAll(
+                          AppTheme.color.backgroundColor.withOpacity(0.1),
+                        ),
+                        padding: MaterialStatePropertyAll(
+                          0.pdX.copyWith(
+                                top: 16.cl(14, 28),
+                                bottom: 16.cl(14, 28),
+                              ),
+                        ),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            'Login',
+                            'Register',
                             style: context.textTheme.headlineLarge
                                 ?.copyWith(color: AppTheme.color.primaryColor),
                           ),

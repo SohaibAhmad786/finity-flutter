@@ -31,9 +31,7 @@ extension f on AppRouter {
       page: screen,
       title: title(),
       transition: transition() ??
-          (GetPlatform.isAndroid
-              ? Transition.rightToLeft
-              : Transition.downToUp),
+          (GetPlatform.isIOS ? Transition.rightToLeft : Transition.downToUp),
     );
   }
 

@@ -35,6 +35,10 @@ class MyApp extends StatelessWidget {
             const WelcomeScreen().page(),
             const RegisterScreen().page(),
             const RegisterPhoneNumberScreen().page(),
+            const VerificationScreen().page(),
+            const UserWelcomeScreen().page(),
+            const LoginScreen().page(),
+            const ForgotPasswordScreen().page(),
           ],
         );
       },

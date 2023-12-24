@@ -1,4 +1,5 @@
 import 'package:finity/extension/extension.dart';
+import 'package:finity/generated/assets.dart';
 import 'package:finity/router/router.dart';
 import 'package:finity/screens/onboarding/screen.dart';
 import 'package:finity/theme/theme.dart';
@@ -47,12 +48,16 @@ class _LaunchScreenState extends State<LaunchScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Image.asset(
+              Assets.imagesLogo,
+              width: 28.cw(100, 400),
+            ),
+            Gap(20.cl(22, 40)),
             Text(
               'Finity',
               style:
                   context.textTheme.displayLarge?.copyWith(color: Colors.white),
             ),
-            Gap(20.cl(22, 40)),
             Text(
               'Money Transfer, Wallet &',
               style:

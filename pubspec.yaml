@@ -30,6 +30,7 @@ dependencies:
   realm: ^1.6.1
   remixicon_updated: ^1.0.2
   responsive_sizer: ^3.2.0
+  sms_otp_auto_verify: ^2.1.0
 
 
 
